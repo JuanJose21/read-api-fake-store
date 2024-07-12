@@ -13,7 +13,7 @@ class ProductModel {
   String description;
   CategoryEnum category;
   String image;
-  RatingModel rating;
+  Rating rating;
 
   ProductModel({
     required this.id,
@@ -32,7 +32,7 @@ class ProductModel {
         description: json["description"],
         category: categoryValues.map[json["category"]]!,
         image: json["image"],
-        rating: RatingModel.fromJson(json["rating"]),
+        rating: Rating.fromJson(json["rating"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -60,16 +60,16 @@ final categoryValues = EnumValues({
   "women's clothing": CategoryEnum.womensClothing
 });
 
-class RatingModel {
+class Rating {
   double rate;
   int count;
 
-  RatingModel({
+  Rating({
     required this.rate,
     required this.count,
   });
 
-  factory RatingModel.fromJson(Map<String, dynamic> json) => RatingModel(
+  factory Rating.fromJson(Map<String, dynamic> json) => Rating(
         rate: json["rate"]?.toDouble(),
         count: json["count"],
       );
