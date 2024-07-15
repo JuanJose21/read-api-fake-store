@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:read_api_fake_store/src/models/cart_model.dart';
 import 'package:read_api_fake_store/src/models/product_model.dart';
 import 'package:read_api_fake_store/src/services/carts_service.dart';
 import 'package:read_api_fake_store/src/services/products_service.dart';
@@ -16,7 +15,11 @@ void getProductsData() async {
     (productsResult) {
       print("------------ Products ------------");
       for (final element in productsResult) {
-        print(jsonEncode(element));
+        print("**************************");
+        print("Título: ${element.title}");
+        print("Descripción: ${element.description}");
+        print("Precio: ${element.price}");
+        print("**************************\n");
       }
     },
   );
