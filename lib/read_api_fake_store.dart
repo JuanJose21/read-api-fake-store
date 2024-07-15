@@ -6,29 +6,37 @@ import 'package:read_api_fake_store/src/services/carts_service.dart';
 import 'package:read_api_fake_store/src/services/products_service.dart';
 
 void getProductsData() async {
-  List<ProductModel> productsResult = [];
-
   ProductsHttpService productsHttpService = ProductsHttpService();
-  productsResult = await productsHttpService.getProducts();
+  final products = await productsHttpService.getProducts();
 
-  print("------------ Products ------------");
-
-  for (final element in productsResult) {
-    print(jsonEncode(element));
-  }
+  products.fold(
+    (error) {
+      print("Ha ocurrido un error: $error");
+    },
+    (productsResult) {
+      print("------------ Products ------------");
+      for (final element in productsResult) {
+        print(jsonEncode(element));
+      }
+    },
+  );
 }
 
 void getCartsData() async {
-  List<CartModel> cartsResult = [];
-
   CartsHttpService cartsHttpService = CartsHttpService();
-  cartsResult = await cartsHttpService.getCarts();
+  final carts = await cartsHttpService.getCarts();
 
-  print("------------ Carts ------------");
-
-  for (final element in cartsResult) {
-    print(jsonEncode(element));
-  }
+  carts.fold(
+    (error) {
+      print("Ha ocurrido un error: $error");
+    },
+    (cartsResult) {
+      print("------------ Carts ------------");
+      for (final element in cartsResult) {
+        print(jsonEncode(element));
+      }
+    },
+  );
 }
 
 void addProduct() async {
@@ -41,10 +49,15 @@ void addProduct() async {
   });
 
   ProductsHttpService productsHttpService = ProductsHttpService();
-  ProductModel productResult =
-      await productsHttpService.addProduct(productModel);
+  final product = await productsHttpService.addProduct(productModel);
 
-  print("------------ Add product ------------");
-
-  print(jsonEncode(productResult));
+  product.fold(
+    (error) {
+      print("Ha ocurrido un error: $error");
+    },
+    (productResult) {
+      print("------------ Add product ------------");
+      print(jsonEncode(productResult));
+    },
+  );
 }
