@@ -14,7 +14,7 @@ class CartsHttpService {
         final List<CartModel> carts = cartModelFromJson(response.body);
         return Right(carts);
       } else {
-        throw ("Error!!! ${response.statusCode}");
+        return Left("Error!!! ${response.statusCode}");
       }
     } catch (e) {
       return Left('Exception - getCarts: $e');

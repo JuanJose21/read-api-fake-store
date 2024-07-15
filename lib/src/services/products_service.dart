@@ -39,7 +39,7 @@ class ProductsHttpService {
         final ProductModel product = productModelFromJson(response.body);
         return Right(product);
       } else {
-        throw ("Error!!! ${response.statusCode}");
+        return Left("Error!!! ${response.statusCode}");
       }
     } catch (e) {
       return Left('Exception - addProduct: $e');
