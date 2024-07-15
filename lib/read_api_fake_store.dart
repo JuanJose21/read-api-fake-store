@@ -6,27 +6,45 @@ import 'package:read_api_fake_store/src/services/carts_service.dart';
 import 'package:read_api_fake_store/src/services/products_service.dart';
 
 void getProductsData() async {
-  List<ProductModel> productModel = [];
+  List<ProductModel> productsResult = [];
 
   ProductsHttpService productsHttpService = ProductsHttpService();
-  productModel = await productsHttpService.getProducts();
+  productsResult = await productsHttpService.getProducts();
 
   print("------------ Products ------------");
 
-  for (var element in productModel) {
+  for (final element in productsResult) {
     print(jsonEncode(element));
   }
 }
 
 void getCartsData() async {
-  List<CartModel> cartModel = [];
+  List<CartModel> cartsResult = [];
 
   CartsHttpService cartsHttpService = CartsHttpService();
-  cartModel = await cartsHttpService.getCarts();
+  cartsResult = await cartsHttpService.getCarts();
 
   print("------------ Carts ------------");
 
-  for (var element in cartModel) {
+  for (final element in cartsResult) {
     print(jsonEncode(element));
   }
+}
+
+void addProduct() async {
+  ProductModel productModel = ProductModel.fromJson({
+    "title": "Product Testing 1",
+    "price": 1,
+    "description": "Product Testing 1 Description",
+    "category": "electronics",
+    "image": "https://i.pravatar.cc/",
+  });
+
+  ProductsHttpService productsHttpService = ProductsHttpService();
+  ProductModel productResult =
+      await productsHttpService.addProduct(productModel);
+
+  print("------------ Add product ------------");
+
+  print(jsonEncode(productResult));
 }

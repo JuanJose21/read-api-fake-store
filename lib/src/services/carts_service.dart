@@ -4,9 +4,9 @@ import 'package:read_api_fake_store/src/models/cart_model.dart';
 import 'package:read_api_fake_store/src/utils/const_app.dart';
 
 class CartsHttpService {
-  getCarts() async {
-    var uri = Uri.parse(baseUrl + endPointCarts);
-    var response = await http.get(uri);
+  Future<List<CartModel>> getCarts() async {
+    final uri = Uri.parse(baseUrl + endPointCarts);
+    final response = await http.get(uri);
 
     if (response.statusCode == 200) {
       return cartModelFromJson(response.body);

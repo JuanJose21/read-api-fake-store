@@ -1,28 +1,33 @@
 import 'dart:convert';
 
-List<ProductModel> productModelFromJson(String str) => List<ProductModel>.from(
+List<ProductModel> productsModelFromJson(String str) => List<ProductModel>.from(
     json.decode(str).map((x) => ProductModel.fromJson(x)));
 
-String productModelToJson(List<ProductModel> data) =>
+String productsModelToJson(List<ProductModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+ProductModel productModelFromJson(String str) =>
+    ProductModel.fromJsonAdd(json.decode(str));
+
+String productModelToJson(ProductModel data) => json.encode(data.toAddJson());
+
 class ProductModel {
-  int id;
+  int? id;
   String title;
   double price;
   String description;
   CategoryEnum category;
   String image;
-  Rating rating;
+  Rating? rating;
 
   ProductModel({
-    required this.id,
+    this.id,
     required this.title,
     required this.price,
     required this.description,
     required this.category,
     required this.image,
-    required this.rating,
+    this.rating,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -32,7 +37,15 @@ class ProductModel {
         description: json["description"],
         category: categoryValues.map[json["category"]]!,
         image: json["image"],
-        rating: Rating.fromJson(json["rating"]),
+        rating: json["rating"] != null ? Rating.fromJson(json["rating"]) : null,
+      );
+
+  factory ProductModel.fromJsonAdd(Map<String, dynamic> json) => ProductModel(
+        title: json["title"],
+        price: json["price"]?.toDouble(),
+        description: json["description"],
+        category: categoryValues.map[json["category"]]!,
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,7 +55,15 @@ class ProductModel {
         "description": description,
         "category": categoryValues.reverse[category],
         "image": image,
-        "rating": rating.toJson(),
+        "rating": rating?.toJson(),
+      };
+
+  Map<String, dynamic> toAddJson() => {
+        "title": title,
+        "price": price,
+        "description": description,
+        "category": categoryValues.reverse[category],
+        "image": image,
       };
 }
 
