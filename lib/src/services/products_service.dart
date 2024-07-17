@@ -7,6 +7,9 @@ import 'package:read_api_fake_store/src/models/product_model.dart';
 import 'package:read_api_fake_store/src/utils/const_app.dart';
 
 class ProductsHttpService {
+  /// Get all products
+  /// Return a list of [ProductModel] if success
+  /// Return a string if error
   Future<Either<String, List<ProductModel>>> getProducts() async {
     try {
       final uri = Uri.parse(baseUrl + endPointProducts);
@@ -24,6 +27,9 @@ class ProductsHttpService {
     }
   }
 
+  /// Add a product
+  /// Return a [ProductModel] if success
+  /// Return a string if error
   Future<Either<String, ProductModel>> addProduct(ProductModel product) async {
     try {
       final uri = Uri.parse(baseUrl + endPointProducts);

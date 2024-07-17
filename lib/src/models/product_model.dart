@@ -1,25 +1,21 @@
 import 'dart:convert';
 
+/// Convierte un json a una lista de tipo [ProductModel]
 List<ProductModel> productsModelFromJson(String str) => List<ProductModel>.from(
     json.decode(str).map((x) => ProductModel.fromJson(x)));
 
+/// Convierte una lista de [ProductModel] a un json
 String productsModelToJson(List<ProductModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+/// Convierte un json a un objeto de tipo [ProductModel]
 ProductModel productModelFromJson(String str) =>
     ProductModel.fromJsonAdd(json.decode(str));
 
+/// Convierte un objeto de tipo [ProductModel] a un json
 String productModelToJson(ProductModel data) => json.encode(data.toAddJson());
 
 class ProductModel {
-  int? id;
-  String title;
-  double price;
-  String description;
-  CategoryEnum category;
-  String image;
-  Rating? rating;
-
   ProductModel({
     this.id,
     required this.title,
@@ -30,24 +26,37 @@ class ProductModel {
     this.rating,
   });
 
+  int? id;
+  String title;
+  double price;
+  String description;
+  CategoryEnum category;
+  String image;
+  Rating? rating;
+
+  /// Convertir un json a un objeto de tipo [ProductModel]
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
         title: json["title"],
         price: json["price"]?.toDouble(),
         description: json["description"],
-        category: categoryValues.map[json["category"]]!,
+        category:
+            categoryValues.map[json["category"]] ?? CategoryEnum.electronics,
         image: json["image"],
         rating: json["rating"] != null ? Rating.fromJson(json["rating"]) : null,
       );
 
+  /// Convertir un json a un objeto de tipo [ProductModel] para agregar un producto
   factory ProductModel.fromJsonAdd(Map<String, dynamic> json) => ProductModel(
         title: json["title"],
         price: json["price"]?.toDouble(),
         description: json["description"],
-        category: categoryValues.map[json["category"]]!,
+        category:
+            categoryValues.map[json["category"]] ?? CategoryEnum.electronics,
         image: json["image"],
       );
 
+  /// Convertir un objeto de tipo [ProductModel] a un json
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
@@ -58,6 +67,7 @@ class ProductModel {
         "rating": rating?.toJson(),
       };
 
+  /// Convertir un objeto de tipo [ProductModel] a un json para agregar un producto
   Map<String, dynamic> toAddJson() => {
         "title": title,
         "price": price,
@@ -82,13 +92,13 @@ final categoryValues = EnumValues({
 });
 
 class Rating {
-  double rate;
-  int count;
-
   Rating({
     required this.rate,
     required this.count,
   });
+
+  double rate;
+  int count;
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
         rate: json["rate"]?.toDouble(),

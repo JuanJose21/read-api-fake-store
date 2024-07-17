@@ -7,12 +7,6 @@ String cartModelToJson(List<CartModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CartModel {
-  int id;
-  int userId;
-  DateTime date;
-  List<Product> products;
-  int v;
-
   CartModel({
     required this.id,
     required this.userId,
@@ -21,6 +15,13 @@ class CartModel {
     required this.v,
   });
 
+  int id;
+  int userId;
+  DateTime date;
+  List<Product> products;
+  int v;
+
+  /// Convertir un json a un objeto de tipo CartModel
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
         id: json["id"],
         userId: json["userId"],
@@ -30,6 +31,7 @@ class CartModel {
         v: json["__v"],
       );
 
+  /// Convertir un objeto de tipo CartModel a un json
   Map<String, dynamic> toJson() => {
         "id": id,
         "userId": userId,
@@ -40,13 +42,13 @@ class CartModel {
 }
 
 class Product {
-  int productId;
-  int quantity;
-
   Product({
     required this.productId,
     required this.quantity,
   });
+
+  int productId;
+  int quantity;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         productId: json["productId"],

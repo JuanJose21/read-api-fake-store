@@ -5,6 +5,9 @@ import 'package:read_api_fake_store/src/models/cart_model.dart';
 import 'package:read_api_fake_store/src/utils/const_app.dart';
 
 class CartsHttpService {
+  /// Obtiene todos los carritos
+  /// Devuelve una lista de [CartModel] si tiene éxito
+  /// Devuelve un string si hay un error
   Future<Either<String, List<CartModel>>> getCarts() async {
     try {
       final uri = Uri.parse(baseUrl + endPointCarts);

@@ -4,6 +4,7 @@ import 'package:read_api_fake_store/src/models/product_model.dart';
 import 'package:read_api_fake_store/src/services/carts_service.dart';
 import 'package:read_api_fake_store/src/services/products_service.dart';
 
+/// Obtiene y muestra los datos de los productos desde el servicio de productos.
 void getProductsData() async {
   ProductsHttpService productsHttpService = ProductsHttpService();
   final products = await productsHttpService.getProducts();
@@ -13,6 +14,7 @@ void getProductsData() async {
       print("Ha ocurrido un error: $error");
     },
     (productsResult) {
+      // Si la llamada es exitosa, se imprimen los detalles de cada producto.
       print("------------ Products ------------");
       for (final element in productsResult) {
         print("**************************");
@@ -25,6 +27,7 @@ void getProductsData() async {
   );
 }
 
+/// Obtiene y muestra los datos de los carritos desde el servicio de carritos.
 void getCartsData() async {
   CartsHttpService cartsHttpService = CartsHttpService();
   final carts = await cartsHttpService.getCarts();
@@ -34,6 +37,7 @@ void getCartsData() async {
       print("Ha ocurrido un error: $error");
     },
     (cartsResult) {
+      // Si la llamada es exitosa, se imprimen los detalles de cada carrito en formato JSON.
       print("------------ Carts ------------");
       for (final element in cartsResult) {
         print(jsonEncode(element));
@@ -42,6 +46,7 @@ void getCartsData() async {
   );
 }
 
+/// Agrega un producto usando el servicio de productos y muestra el resultado.
 void addProduct() async {
   ProductModel productModel = ProductModel.fromJson({
     "title": "Product Testing 1",
@@ -59,6 +64,7 @@ void addProduct() async {
       print("Ha ocurrido un error: $error");
     },
     (productResult) {
+      // Si la llamada es exitosa, se imprime el detalle del producto agregado en formato JSON.
       print("------------ Add product ------------");
       print(jsonEncode(productResult));
     },
