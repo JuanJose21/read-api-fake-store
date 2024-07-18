@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:read_api_fake_store/src/models/rating_model.dart';
+import 'package:read_api_fake_store/src/utils/enums/enums_category.dart';
+
 /// Convierte un json a una lista de tipo [ProductModel]
 List<ProductModel> productsModelFromJson(String str) => List<ProductModel>.from(
     json.decode(str).map((x) => ProductModel.fromJson(x)));
@@ -32,7 +35,7 @@ class ProductModel {
   String description;
   CategoryEnum category;
   String image;
-  Rating? rating;
+  RatingModel? rating;
 
   /// Convertir un json a un objeto de tipo [ProductModel]
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -43,7 +46,9 @@ class ProductModel {
         category:
             categoryValues.map[json["category"]] ?? CategoryEnum.electronics,
         image: json["image"],
-        rating: json["rating"] != null ? Rating.fromJson(json["rating"]) : null,
+        rating: json["rating"] != null
+            ? RatingModel.fromJson(json["rating"])
+            : null,
       );
 
   /// Convertir un json a un objeto de tipo [ProductModel] para agregar un producto
@@ -75,50 +80,4 @@ class ProductModel {
         "category": categoryValues.reverse[category],
         "image": image,
       };
-}
-
-enum CategoryEnum {
-  electronics,
-  jewelery,
-  mensClothing,
-  womensClothing,
-}
-
-final categoryValues = EnumValues({
-  "electronics": CategoryEnum.electronics,
-  "jewelery": CategoryEnum.jewelery,
-  "men's clothing": CategoryEnum.mensClothing,
-  "women's clothing": CategoryEnum.womensClothing
-});
-
-class Rating {
-  Rating({
-    required this.rate,
-    required this.count,
-  });
-
-  double rate;
-  int count;
-
-  factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-        rate: json["rate"]?.toDouble(),
-        count: json["count"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "rate": rate,
-        "count": count,
-      };
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }
